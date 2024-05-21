@@ -7,6 +7,13 @@
       command: systemctl list-units --type=service --state=running
       register: service_status
 
-    - name: Output service status
-      debug:
-        var: service_status.stdout_lines
+    - name: Output service status to a file
+      copy:
+        content: "{{ service_status.stdout }}"
+        dest: "/tmp/service_status_{{ inventory_hostname }}.log"
+
+    - name: Fetch the service status file to the local machine
+      fetch:
+        src: "/tmp/service_status_{{ inventory_hostname }}.log"
+        dest: "/tmp/output/service_status_{{ inventory_hostname }}.log"
+        flat: yes
