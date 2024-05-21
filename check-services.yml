@@ -1,0 +1,12 @@
+---
+- name: Check status of all services
+  hosts: all
+  become: yes
+  tasks:
+    - name: Get the status of all services
+      command: systemctl list-units --type=service --state=running
+      register: service_status
+
+    - name: Output service status
+      debug:
+        var: service_status.stdout_lines
