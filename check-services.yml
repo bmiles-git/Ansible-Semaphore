@@ -10,8 +10,3 @@
     - name: Output service status
       debug:
         var: service_status.stdout_lines
-version: v1.0
-tasks:
-    output:
-      type: file
-      file: /tmp/semaphore/output/results.log
